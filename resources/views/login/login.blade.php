@@ -116,11 +116,16 @@
                                                 <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
                                                     type="submit">Masuk</button>
                                             </div>
-                                            <div class="d-flex align-items-center justify-content-center pb-4">
+                                            <div class="d-flex align-items-center justify-content-between pb-4">
                                                 <p class="mb-0 me-2 Poppins">Tidak punya akun?</p>
-                                                <a href="register" class="link-danger Poppins">Daftar</a></p>
+                                                <a href="{{ route('register') }}" class="link-danger Poppins">Daftar</a>
 
+                                                <a href="{{ route('password.request') }}"
+                                                    class="link-info Poppins ms-3">
+                                                    <i class="fas fa-key me-1"></i>Lupa Password?
+                                                </a>
                                             </div>
+
 
                                         </form>
 

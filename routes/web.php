@@ -1,37 +1,38 @@
 <?php
 
-use App\Http\Controllers\BarangController;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\KecamatanController;
-use App\Http\Controllers\KeranjangController;
-use App\Http\Controllers\AlamatController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\OngkirController;
-use App\Http\Controllers\PembelajaranController;
-use App\Http\Controllers\KomentarController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PaymentCallbackController;
-use App\Http\Controllers\PesananController;
-use App\Http\Controllers\PesananPembelajaranController;
-use App\Http\Controllers\RatingController;
-use App\Http\Controllers\RatingPembelajaranController;
-use App\Http\Controllers\PelatihController;
-use App\Http\Controllers\CheckoutPembelajaranController;
-use App\Http\Controllers\SettingController;
-use App\Models\kategori;
-use App\Models\Keranjang;
-use App\Models\Komentar;
-use App\Models\Pembelajaran;
 use App\Models\barang;
-use App\Models\CheckoutPembelajaran;
 use App\Models\Rating;
 use App\Models\Setting;
-use App\Models\Ratingpembelajaran;
+use App\Models\kategori;
+use App\Models\Komentar;
+use App\Models\Keranjang;
+use App\Models\Pembelajaran;
 use Illuminate\Http\Request;
+use App\Models\Ratingpembelajaran;
+use App\Models\CheckoutPembelajaran;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AlamatController;
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\OngkirController;
+use App\Http\Controllers\RatingController;
+use App\Http\Controllers\PelatihController;
+use App\Http\Controllers\PesananController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\KomentarController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KecamatanController;
+use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\PembelajaranController;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\PaymentCallbackController;
+use App\Http\Controllers\RatingPembelajaranController;
+use App\Http\Controllers\PesananPembelajaranController;
+use App\Http\Controllers\CheckoutPembelajaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -177,6 +178,19 @@ Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth');
 
 Route::get('/register', [RegisterController::class, 'index'])->name('register')->middleware('guest');
 Route::post('/register', [RegisterController::class, 'register'])->middleware('guest');
+
+
+// Forgot Password dengan OTP Code
+Route::middleware('guest')->group(function () {
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('password.request');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetCode'])->name('password.email');
+    
+    Route::get('/verify-code', [ForgotPasswordController::class, 'showVerifyCodeForm'])->name('password.verify.code');
+    Route::post('/verify-code', [ForgotPasswordController::class, 'verifyCode'])->name('password.verify');
+    
+    Route::get('/reset-password', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset.form');
+    Route::post('/reset-password', [ForgotPasswordController::class, 'reset'])->name('password.update');
+});
 
 // Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 // 
